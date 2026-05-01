@@ -140,6 +140,23 @@ form {
     gap: 12px;
 }
 
+.courses-container {
+    display: grid;
+    gap: 12px;
+}
+
+.course-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    align-items: start;
+}
+
+.course-field {
+    display: grid;
+    gap: 8px;
+}
+
 label {
     font-weight: 600;
     font-size: 0.92rem;
@@ -188,5 +205,9 @@ th {
     .card,
     .form-card {
         padding: 18px;
+    }
+
+    .course-row {
+        grid-template-columns: 1fr;
     }
 }

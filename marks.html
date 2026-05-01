@@ -25,14 +25,20 @@
             <label for="roll">Roll Number</label>
             <input id="roll" type="text" name="roll" placeholder="e.g. 101" required>
 
-            <label for="math">Math</label>
-            <input id="math" type="number" name="math" placeholder="0 - 100" min="0" max="100" required>
+            <div id="courses-container" class="courses-container">
+                <div class="course-row">
+                    <div class="course-field">
+                        <label for="course_name_1">Course Name</label>
+                        <input id="course_name_1" type="text" name="course_names[]" placeholder="Enter course name" required>
+                    </div>
+                    <div class="course-field">
+                        <label for="course_mark_1">Mark</label>
+                        <input id="course_mark_1" type="number" name="course_marks[]" placeholder="0 - 100" min="0" max="100" required>
+                    </div>
+                </div>
+            </div>
 
-            <label for="science">Science</label>
-            <input id="science" type="number" name="science" placeholder="0 - 100" min="0" max="100" required>
-
-            <label for="english">English</label>
-            <input id="english" type="number" name="english" placeholder="0 - 100" min="0" max="100" required>
+            <button id="add-course-btn" class="btn-secondary" type="button">+ Add Another Course</button>
 
             <button type="submit">Save Marks</button>
         </form>
@@ -42,6 +48,31 @@
 <footer class="site-footer">
     <p>&copy; 2026 Student Marks System. All rights reserved.</p>
 </footer>
+
+<script>
+    const coursesContainer = document.getElementById('courses-container');
+    const addCourseBtn = document.getElementById('add-course-btn');
+    let courseIndex = 1;
+
+    addCourseBtn.addEventListener('click', () => {
+        courseIndex += 1;
+
+        const row = document.createElement('div');
+        row.className = 'course-row';
+        row.innerHTML = `
+            <div class="course-field">
+                <label for="course_name_${courseIndex}">Course Name</label>
+                <input id="course_name_${courseIndex}" type="text" name="course_names[]" placeholder="Enter course name" required>
+            </div>
+            <div class="course-field">
+                <label for="course_mark_${courseIndex}">Mark</label>
+                <input id="course_mark_${courseIndex}" type="number" name="course_marks[]" placeholder="0 - 100" min="0" max="100" required>
+            </div>
+        `;
+
+        coursesContainer.appendChild(row);
+    });
+</script>
 
 </body>
 </html>
