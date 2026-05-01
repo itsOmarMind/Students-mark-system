@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Student</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="navbar">
+    <h2>Student Marks System</h2>
+    <nav class="nav-links" id="registerNav">
+        <a href="index.html">Home</a>
+        <a href="register.html">Register</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="marks.html">Enter Marks</a>
+        <a href="result.html">Result</a>
+        <a href="login.html">Login</a>
+    </nav>
+</header>
+
+<div class="form-container">
+    <div class="form-card">
+        <h2>Register New Student</h2>
+        <p>Add student information to create a new record.</p>
+        <form action="marks.html" method="GET" id="registerForm">
+            <label for="name">Full Name</label>
+            <input id="name" type="text" name="name" placeholder="Enter full name" required>
+
+            <label for="roll">Roll Number</label>
+            <input id="roll" type="text" name="roll" placeholder="e.g. 101" required>
+
+            <label for="email">Email Address</label>
+            <input id="email" type="email" name="email" placeholder="student@example.com" required>
+
+            <button type="submit">Register Student</button>
+        </form>
+    </div>
+</div>
+
+<footer class="site-footer">
+    <p>&copy; 2026 Student Marks System. All rights reserved.</p>
+</footer>
+
+<script>
+    const params = new URLSearchParams(window.location.search);
+    const role = params.get("role");
+    const registerNav = document.getElementById("registerNav");
+    const registerForm = document.getElementById("registerForm");
+
+    if (role === "student") {
+        registerNav.innerHTML = '<a href="index.html">Back to Home</a>';
+        registerForm.action = "index.html";
+    } else {
+        registerForm.action = "marks.html";
+    }
+</script>
+
+</body>
+</html>
