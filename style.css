@@ -140,11 +140,6 @@ form {
     gap: 12px;
 }
 
-.courses-container {
-    display: grid;
-    gap: 12px;
-}
-
 .course-row {
     display: grid;
     grid-template-columns: 1fr 1fr;

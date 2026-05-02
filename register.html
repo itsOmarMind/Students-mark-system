@@ -12,8 +12,8 @@
     <nav class="nav-links" id="registerNav">
         <a href="index.html">Home</a>
         <a href="register.html">Register</a>
-        <a href="dashboard.html">Dashboard</a>
-        <a href="marks.html">Enter Marks</a>
+        <a href="dashboard.php">Dashboard</a>
+        <a href="marks.php">Enter Marks</a>
         <a href="result.html">Result</a>
         <a href="login.html">Login</a>
     </nav>
@@ -23,7 +23,9 @@
     <div class="form-card">
         <h2>Register New Student</h2>
         <p>Add student information to create a new record.</p>
-        <form action="marks.html" method="GET" id="registerForm">
+        
+        <!-- GET method in here... -->
+        <form action="marks.php" method="GET" id="registerForm">
             <label for="name">Full Name</label>
             <input id="name" type="text" name="name" placeholder="Enter full name" required>
 
@@ -41,20 +43,6 @@
 <footer class="site-footer">
     <p>&copy; 2026 Student Marks System. All rights reserved.</p>
 </footer>
-
-<script>
-    const params = new URLSearchParams(window.location.search);
-    const role = params.get("role");
-    const registerNav = document.getElementById("registerNav");
-    const registerForm = document.getElementById("registerForm");
-
-    if (role === "student") {
-        registerNav.innerHTML = '<a href="index.html">Back to Home</a>';
-        registerForm.action = "index.html";
-    } else {
-        registerForm.action = "marks.html";
-    }
-</script>
 
 </body>
 </html>
