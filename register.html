@@ -15,7 +15,7 @@
         <a href="dashboard.php">Dashboard</a>
         <a href="marks.php">Enter Marks</a>
         <a href="result.html">Result</a>
-        <a href="login.html">Login</a>
+        <a href="login.php">Login</a>
     </nav>
 </header>
 
@@ -24,13 +24,12 @@
         <h2>Register New Student</h2>
         <p>Add student information to create a new record.</p>
         
-        <!-- GET method in here... -->
-        <form action="marks.php" method="GET" id="registerForm">
+        <form action="register.php" method="POST" id="registerForm">
             <label for="name">Full Name</label>
             <input id="name" type="text" name="name" placeholder="Enter full name" required>
 
             <label for="roll">Roll Number</label>
-            <input id="roll" type="text" name="roll" placeholder="e.g. 101" required>
+            <input id="roll" type="text" name="roll_number" placeholder="e.g. 101" required>
 
             <label for="email">Email Address</label>
             <input id="email" type="email" name="email" placeholder="student@example.com" required>

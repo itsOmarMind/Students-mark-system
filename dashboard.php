@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION["teacher_id"])) {
-    header("Location: login.html");
+    header("Location: login.php");
     exit();
 }
 
@@ -53,7 +53,16 @@ mysqli_close($conn);
 
 <body>
     <header class="navbar">
-        <h2>Student Marks System</h2>
+
+    <!--
+        ^ 'requrie' Includes another PHP file.
+
+        ^ __DIR__ gives the absolute path of the current file’s folder,
+        ^ so PHP can reliably locate navbar_brand.php regardless of where 
+        ^ the script is called from.
+    -->
+    
+    <?php require __DIR__ . "/navbar_brand.php"; ?>
         <nav class="nav-links">
             <a href="index.html">Home</a>
             <a href="dashboard.php">Dashboard</a>
@@ -83,8 +92,14 @@ mysqli_close($conn);
                             <td><?php echo htmlspecialchars($student["roll_number"] ?? ""); ?></td>
                             <td><?php echo htmlspecialchars($student["name"] ?? ""); ?></td>
                             <td class="actions">
-                                <button>Edit</button>
-                                <button class="btn-danger">Delete</button>
+                                <a href="edit_student.php?id=<?php echo (int) ($student['id'] ?? 0); ?>"
+                                    onclick="return confirm('Do you want to edit this student?');">
+                                    <button>Edit</button>
+                                </a>
+                                <a href="delete_student.php?id=<?php echo (int) ($student['id'] ?? 0); ?>"
+                                    onclick="return confirm('Are you sure you want to delete this student?');">
+                                    <button class="btn-danger">Delete</button>
+                                </a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
