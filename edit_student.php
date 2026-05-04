@@ -1,5 +1,6 @@
 <?php
 session_start();
+require __DIR__ . "/database.php";
 if (!isset($_SESSION["teacher_id"])) {
     header("Location: login.php");
     exit();
@@ -10,8 +11,6 @@ if ($student_id <= 0) {
     header("Location: dashboard.php");
     exit();
 }
-
-$conn = mysqli_connect("localhost", "root", "", "student_management_system");
 if (!$conn) {
     http_response_code(500);
     echo "Database connection failed.";

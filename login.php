@@ -1,5 +1,6 @@
 <?php
 session_start();
+require __DIR__ . "/database.php";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $username = isset($_POST["username"]) ? trim($_POST["username"]) : "";
@@ -9,8 +10,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         header("Location: login.php?error=1");
         exit();
     }
-
-    $conn = mysqli_connect("localhost", "root", "", "student_management_system");
 
     if (!$conn) {
         http_response_code(500);

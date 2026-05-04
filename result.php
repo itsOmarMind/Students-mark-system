@@ -1,5 +1,6 @@
 <?php
 session_start();
+require __DIR__ . "/database.php";
 
 $query = "";
 $results = [];
@@ -35,9 +36,6 @@ if (isset($_GET["query"])) {
 
     if ($query != "") {
         $searched = true;
-
-        // Connect to database
-        $conn = mysqli_connect("localhost", "root", "", "student_management_system");
 
         if (!$conn) {
             $error_message = "Database connection failed.";

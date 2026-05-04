@@ -1,5 +1,6 @@
 <?php
 session_start();
+require __DIR__ . "/database.php";
 
 $username = "";
 $error_message = "";
@@ -17,8 +18,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     } elseif ($password != $confirm_password) {
         $error_message = "Passwords do not match.";
     } else {
-        $conn = mysqli_connect("localhost", "root", "", "student_management_system");
-
         if (!$conn) {
             $error_message = "Database connection failed.";
         } else {

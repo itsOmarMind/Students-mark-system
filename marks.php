@@ -1,5 +1,6 @@
 <?php
 session_start();
+require __DIR__ . "/database.php";
 
 if (!isset($_SESSION["teacher_id"])) {
     header("Location: login.php");
@@ -14,8 +15,6 @@ $form_course_name = "";
 $form_course_mark = "";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $conn = mysqli_connect("localhost", "root", "", "student_management_system");
-
     if (!$conn) {
         $error_message = "Database connection failed.";
     } else {
