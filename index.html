@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,15 +11,7 @@
 </head>
 <body>
     <header class="navbar">
-        <h2>Student Marks System</h2>
-        <nav class="nav-links">
-            <a href="index.html">Home</a>
-            <a href="register.html">Register</a>
-            <a href="dashboard.php">Dashboard</a>
-            <a href="marks.php">Enter Marks</a>
-            <a href="result.html">Result</a>
-            <a href="login.php">Login</a>
-        </nav>
+        <?php require __DIR__ . "/navbar_brand.php"; ?>
     </header>
 
     <main class="container">
@@ -25,8 +20,8 @@
             <p>Manage student records, marks, and final results in one place.</p>
 
             <div class="buttons">
-                <a class="btn" href="login.php">Teacher Login</a>
-                <a class="btn btn-secondary" href="register.html?role=student">Register Student</a>
+                <a class="btn" href="login.php">Teachers space</a>
+                <a class="btn btn-secondary" href="register.php">Register Student</a>
             </div>
         </section>
     </main>

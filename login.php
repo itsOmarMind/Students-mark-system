@@ -31,11 +31,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     mysqli_stmt_bind_param($stmt, "s", $username);
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
-    $teacher = mysqli_fetch_assoc($result);
+    $user = mysqli_fetch_assoc($result);
 
-    if ($teacher && isset($teacher["password"]) && $teacher["password"] === $password) {
-        $_SESSION["teacher_id"] = $teacher["id"];
-        $_SESSION["username"] = $teacher["username"];
+    if ($user && isset($user["password"]) && password_verify($password, $user["password"])) {
+        $_SESSION["teacher_id"] = $user["id"];
+        $_SESSION["username"] = $user["username"];
 
         mysqli_stmt_close($stmt);
         mysqli_close($conn);
@@ -60,13 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 </head>
 <body>
 <header class="navbar">
-    <h2>Student Marks System</h2>
-    <nav class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="dashboard.php">Dashboard</a>
-        <a href="marks.php">Enter Marks</a>
-        <a href="login.php">Login</a>
-    </nav>
+    <?php require __DIR__ . "/navbar_brand.php"; ?>
 </header>
 
 <div class="form-container">
@@ -77,6 +71,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if (isset($_GET['error'])) {
             echo "<p style='color:red; text-align:center;'>Invalid username or password</p>";
         }
+
+        if (isset($_GET['registered'])) {
+            echo "<p style='color:green; text-align:center;'>Teacher registered successfully. Please login.</p>";
+        }
         ?>
         <form action="login.php" method="POST">
             <label for="username">Username</label>
@@ -86,6 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <input id="password" type="password" name="password" placeholder="Enter password" required>
 
             <button type="submit">Login</button>
+            <a class="btn btn-secondary" href="register_teacher.php" style="text-align:center;">Register Teacher</a>
         </form>
     </div>
 </div>

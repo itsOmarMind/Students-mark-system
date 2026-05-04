@@ -1,3 +1,78 @@
+<?php
+session_start();
+
+$query = "";
+$results = [];
+$searched = false;
+$error_message = "";
+
+function getGrade($mark)
+{
+    if ($mark >= 95) {
+        return "A+";
+    } elseif ($mark >= 90) {
+        return "A";
+    } elseif ($mark >= 85) {
+        return "B+";
+    } elseif ($mark >= 80) {
+        return "B";
+    } elseif ($mark >= 75) {
+        return "C+";
+    } elseif ($mark >= 70) {
+        return "C";
+    } elseif ($mark >= 65) {
+        return "D+";
+    } elseif ($mark >= 60) {
+        return "D";
+    } else {
+        return "F";
+    }
+}
+
+// Check if the user searched
+if (isset($_GET["query"])) {
+    $query = trim($_GET["query"]);
+
+    if ($query != "") {
+        $searched = true;
+
+        // Connect to database
+        $conn = mysqli_connect("localhost", "root", "", "student_management_system");
+
+        if (!$conn) {
+            $error_message = "Database connection failed.";
+        } else {
+            // Search students by name and get their marks and courses
+            $sql = "SELECT students.name, courses.course_name, marks.mark
+                    FROM students
+                    INNER JOIN marks ON students.id = marks.student_id
+                    INNER JOIN courses ON courses.id = marks.course_id
+                    WHERE students.name LIKE ?";
+
+            $stmt = mysqli_prepare($conn, $sql);
+
+            if (!$stmt) {
+                $error_message = "Search failed.";
+            } else {
+                $search_name = "%" . $query . "%";
+
+                mysqli_stmt_bind_param($stmt, "s", $search_name);
+                mysqli_stmt_execute($stmt);
+
+                $result = mysqli_stmt_get_result($stmt);
+
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $results[] = $row;
+                }
+
+                mysqli_stmt_close($stmt);
+            }
+
+            mysqli_close($conn);
+        }
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,13 +85,13 @@
             flex: 1;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             padding: 24px 16px;
         }
 
         .search-container {
             width: 100%;
-            max-width: 500px;
+            max-width: 900px;
         }
 
         .search-box {
@@ -59,6 +134,10 @@
             background: #1d4ed8;
         }
 
+        .result-table {
+            margin-top: 24px;
+        }
+
         @media (max-width: 600px) {
             .search-box {
                 flex-direction: column;
@@ -73,25 +152,49 @@
 </head>
 <body>
 <header class="navbar">
-    <h2>Student Marks System</h2>
-    <nav class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="register.html">Register</a>
-        <a href="dashboard.php">Dashboard</a>
-        <a href="marks.php">Enter Marks</a>
-        <a href="result.php">Result</a>
-        <a href="login.php">Login</a>
-    </nav>
+    <?php require __DIR__ . "/navbar_brand.php"; ?>
 </header>
 
 <main class="result-main">
     <div class="search-container">
         <form method="GET" action="result.php">
             <div class="search-box">
-                <input type="text" name="query" placeholder="Search students by name..." required>
+                <input type="text" name="query" placeholder="Search students by name..." required
+                    value="<?php echo htmlspecialchars($query); ?>">
                 <button type="submit">Search</button>
             </div>
         </form>
+
+        <div class="result-table">
+            <?php
+            if ($error_message != "") {
+                echo "<p style='color:red; text-align:center;'>" . htmlspecialchars($error_message) . "</p>";
+            } elseif ($searched && empty($results)) {
+                echo "<p style='text-align:center;'>No results found</p>";
+            } elseif (!empty($results)) {
+                echo "<table>";
+                echo "<tr>";
+                echo "<th>Student Name</th>";
+                echo "<th>Course Name</th>";
+                echo "<th>Mark</th>";
+                echo "<th>Grade</th>";
+                echo "</tr>";
+
+                foreach ($results as $row) {
+                    $grade = getGrade($row["mark"]);
+
+                    echo "<tr>";
+                    echo "<td>" . htmlspecialchars($row["name"]) . "</td>";
+                    echo "<td>" . htmlspecialchars($row["course_name"]) . "</td>";
+                    echo "<td>" . htmlspecialchars($row["mark"]) . "</td>";
+                    echo "<td>" . htmlspecialchars($grade) . "</td>";
+                    echo "</tr>";
+                }
+
+                echo "</table>";
+            }
+            ?>
+        </div>
     </div>
 </main>
 

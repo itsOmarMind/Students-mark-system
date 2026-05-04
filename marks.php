@@ -150,12 +150,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <body>
     <header class="navbar">
         <?php require __DIR__ . "/navbar_brand.php"; ?>
-        <nav class="nav-links">
-            <a href="index.html">Home</a>
-            <a href="dashboard.php">Dashboard</a>
-            <a href="marks.php">Enter Marks</a>
-            <a href="logout.php">Logout</a>
-        </nav>
     </header>
 
     <div class="form-container">
